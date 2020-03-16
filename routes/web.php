@@ -17,6 +17,7 @@ Route::get('/notadmin/login','SuperAdmin\SuperAdminAuth@LoginForm');
 Route::post('/notadmin/login','SuperAdmin\SuperAdminAuth@Login');
 Route::get('/notadmin/dashboard','SuperAdmin\Dashboard@Dashboard');
 
+
 //superadmin cashier management
 Route::get('/notadmin/cashier/add','SuperAdmin\CashierController@addform');
 Route::post('/notadmin/cashier/add','SuperAdmin\CashierController@add');
@@ -34,8 +35,37 @@ Route::get('/notadmin/branch/delete/{id}','SuperAdmin\BranchController@delete');
 Route::get('/notadmin/branch/edit/{id}','SuperAdmin\BranchController@edit');
 Route::post('/notadmin/branch/update','SuperAdmin\BranchController@update');
 
+Route::get('/notadmin/branch/availablity-switch/{id}','SuperAdmin\BranchController@AvailablitySwitch');
 
 
+//superadmin product management
+//Route::get('/notadmin/product/add','SuperAdmin\BranchController@addform');
+//Route::post('/notadmin/product/add','SuperAdmin\BranchController@add');
+Route::get('/notadmin/products','SuperAdmin\ProductController@list');
+//Route::get('/notadmin/product/delete/{id}','SuperAdmin\ProductController@delete');
+//Route::get('/notadmin/product/edit/{id}','SuperAdmin\ProductController@edit');
+//Route::post('/notadmin/product/update','SuperAdmin\ProductController@update');
+
+Route::get('/notadmin/product/availablity-switch/{id}','SuperAdmin\ProductController@AvailablitySwitch');
+Route::get('/notadmin/product/approval-switch/{id}','SuperAdmin\ProductController@ApprovalSwitch');
+
+//superadmin category management
+Route::get('/notadmin/category/add','SuperAdmin\CategoryController@addform');
+Route::post('/notadmin/category/add','SuperAdmin\CategoryController@add');
+Route::get('/notadmin/categories','SuperAdmin\CategoryController@list');
+Route::get('/notadmin/category/delete/{id}','SuperAdmin\CategoryController@delete');
+Route::get('/notadmin/category/edit/{id}','SuperAdmin\CategoryController@edit');
+Route::post('/notadmin/category/update','SuperAdmin\CategoryController@update');
+
+//cashier product management
+Route::get('/cashier/product/add','Cashier\ProductController@addform');
+Route::post('/cashier/product/add','Cashier\ProductController@add');
+Route::get('/cashier/products','Cashier\ProductController@list');
+Route::get('/cashier/product/delete/{id}','Cashier\ProductController@delete');
+Route::get('/cashier/product/edit/{id}','Cashier\ProductController@edit');
+Route::post('/cashier/product/update','Cashier\ProductController@update');
+
+Route::get('/cashier/product/availablity-switch/{id}','Cashier\ProductController@AvailablitySwitch');
 
 Route::get('/cashier/login','Cashier\CashierAuth@LoginForm');
 Route::post('/cashier/login','Cashier\CashierAuth@Login');
@@ -43,10 +73,14 @@ Route::get('/cashier/dashboard','Cashier\Dashboard@Dashboard');
 Route::get('/cashier/branch','Cashier\BranchController@view');
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/','Common\BranchController@list');
+Route::get('/online-food-menu','Common\FoodMenuController@list');
+
+Route::post('/CityAreaSelection','Common\CityAreaController@submit');
+Route::get('/getAreas/{cityname}','Common\CityAreaController@getAreas');
+
+Route::get('/branch/{branchslug}','Common\BranchController@branchSelection');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');

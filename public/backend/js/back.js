@@ -137,15 +137,27 @@ setTimeout(function () {
 
 /***/ }),
 
+/***/ "./resources/frontend/sass/front.scss":
+/*!********************************************!*\
+  !*** ./resources/frontend/sass/front.scss ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ 0:
-/*!*******************************************************************************!*\
-  !*** multi ./resources/backend/js/back.js ./resources/backend/sass/back.scss ***!
-  \*******************************************************************************/
+/*!********************************************************************************************************************!*\
+  !*** multi ./resources/backend/js/back.js ./resources/backend/sass/back.scss ./resources/frontend/sass/front.scss ***!
+  \********************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! /home/vagrant/code/tomato/resources/backend/js/back.js */"./resources/backend/js/back.js");
-module.exports = __webpack_require__(/*! /home/vagrant/code/tomato/resources/backend/sass/back.scss */"./resources/backend/sass/back.scss");
+__webpack_require__(/*! /home/vagrant/code/tomato/resources/backend/sass/back.scss */"./resources/backend/sass/back.scss");
+module.exports = __webpack_require__(/*! /home/vagrant/code/tomato/resources/frontend/sass/front.scss */"./resources/frontend/sass/front.scss");
 
 
 /***/ })

@@ -1,0 +1,91 @@
+@charset "UTF-8";
+//mobile bottm navigation
+@media only screen and (max-width: 992px)
+{
+nav .brand-logo {
+    left: 40% !important;
+	}
+}
+.mobile-bottom-nav{
+	position:fixed;
+	bottom:0;
+	left:0;
+	right:0;
+	z-index:1000;
+
+	//give nav it's own compsite layer
+	will-change:transform;
+	transform: translateZ(0);
+
+	display:flex;
+
+	height:50px;
+
+	box-shadow: 0 -2px 5px -2px #333;
+	background-color:#000;
+
+	&__item{
+    line-height: 0px !important;
+		flex-grow:1;
+		text-align:center;
+		font-size:12px;
+
+		display:flex;
+		flex-direction:column;
+		justify-content:center;
+	}
+	&__item--active{
+		//dev
+		color:red;
+	}
+	&__item-content{
+		display:flex;
+		flex-direction:column;
+	}
+}
+//mobile bottm navigation
+
+// Color
+@import "components/color-variables";
+@import "components/color-classes";
+
+// Variables;
+@import "components/variables";
+
+// Reset
+@import "components/normalize";
+
+// components
+@import "components/global";
+@import "components/badges";
+@import "components/icons-material-design";
+@import "components/grid";
+@import "components/navbar";
+@import "components/typography";
+@import "components/transitions";
+@import "components/cards";
+@import "components/toast";
+@import "components/tabs";
+@import "components/tooltip";
+@import "components/buttons";
+@import "components/dropdown";
+@import "components/waves";
+@import "components/modal";
+@import "components/collapsible";
+@import "components/chips";
+@import "components/materialbox";
+@import "components/forms/forms";
+@import "components/table_of_contents";
+@import "components/sidenav";
+@import "components/preloader";
+@import "components/slider";
+@import "components/carousel";
+@import "components/tapTarget";
+@import "components/pulse";
+@import "components/datepicker";
+@import "components/timepicker";
+@media #{$large-and-up} {
+.brand-logo{
+	margin-left:1%;
+}
+}

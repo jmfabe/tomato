@@ -20,7 +20,9 @@
     <tr>
       <td>{{$cashier->name}}</td>
       <td>{{$cashier->username}}</td>
-      <td>{{$cashier->branch_id}}</td>
+      <td>@isset($cashier->branch)
+        {{$cashier->branch->name}}
+      @endisset</td>
       <td><a href="/notadmin/cashier/edit/{{$cashier->id}}" class="btn">Edit / Reset Pwd</a></td>
 
       <td><a href="/notadmin/cashier/delete/{{$cashier->id}}" class="btn">Delete</a></td>

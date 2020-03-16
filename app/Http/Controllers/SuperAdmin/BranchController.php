@@ -14,6 +14,20 @@ class BranchController extends Controller
       $this->middleware('auth:superadmin');
 
   }
+
+  public function AvailablitySwitch($id)
+  {
+    $branch = Branch::find($id);
+    if ($branch->is_available == true) {
+      $branch->is_available = false;
+    }
+    else {
+      $branch->is_available = true;
+    }
+    $branch->save();
+    return $branch->is_available;
+  }
+
   public function list()
   {
     $branches = Branch::all();

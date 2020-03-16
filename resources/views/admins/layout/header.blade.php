@@ -59,6 +59,26 @@
                     </div>
                   </li>
 
+                  <li>
+                    <a class="collapsible-header">Category<i class="material-icons right">arrow_drop_down</i></a>
+                    <div class="collapsible-body">
+                      <ul>
+                        <li><a href="/notadmin/category/add">Add Category</a></li>
+                        <li><a href="/notadmin/categories">List Categories</a></li>
+                      </ul>
+                    </div>
+                  </li>
+
+                  <li>
+                    <a class="collapsible-header">Products<i class="material-icons right">arrow_drop_down</i></a>
+                    <div class="collapsible-body">
+                      <ul>
+                        <li><a href="/notadmin/product/add">Add Product</a></li>
+                        <li><a href="/notadmin/products">List Products</a></li>
+                      </ul>
+                    </div>
+                  </li>
+
                 </ul>
               </li>
 
@@ -84,5 +104,7 @@
 
       <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
       <main>
+
         <div class="container">
+          <span style="float:right; background-color:black;padding:5px;color:white">welcome, {{Auth::user()->name}}</span>
         <h5>{{ $PageHeading ?? '' }}</h5>

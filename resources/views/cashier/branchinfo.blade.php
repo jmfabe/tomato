@@ -27,7 +27,7 @@
           </tr>
         </thead>
         <tbody>
-            @foreach ($branch->hours as $hours)
+            @foreach ($branch->hours->sortby('open_time')->sortby('day') as $hours)
               <tr>
                 <td>
                 @switch($hours->day)

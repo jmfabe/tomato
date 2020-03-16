@@ -19,6 +19,7 @@ class CreateBranchesTable extends Migration
             $table->string('slug')->uniqe();
             $table->string('type');
             $table->string('map_link');
+            $table->boolean('is_available')->default('1');
             $table->string('city');
             $table->string('area');
             $table->string('address');

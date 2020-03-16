@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Cashier;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Auth;
 
 class Dashboard extends Controller
 {
@@ -15,6 +16,8 @@ class Dashboard extends Controller
   }
   public function Dashboard()
   {
-    return view('cashier.dashboard');
+        $cashier = Auth::user();
+      $branch = $cashier->branch;
+    return view('cashier.dashboard',compact('branch'));
   }
 }
