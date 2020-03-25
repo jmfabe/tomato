@@ -75,12 +75,27 @@ Route::get('/cashier/branch','Cashier\BranchController@view');
 
 Route::get('/','Common\BranchController@list');
 Route::get('/online-food-menu','Common\FoodMenuController@list');
-
+Route::get('/getProdOpts/{id}','Common\FoodMenuController@getProdOpts');
 Route::post('/CityAreaSelection','Common\CityAreaController@submit');
 Route::get('/getAreas/{cityname}','Common\CityAreaController@getAreas');
 
 Route::get('/branch/{branchslug}','Common\BranchController@branchSelection');
 
+Route::post('/add-to-cart','Common\CartController@add');
+
+Route::get('/OptionQuantity/{cart_item_id}/{quantity}','Common\CartController@quantity');
+Route::get('/removeCart/{cart_item_id}','Common\CartController@removeItem');
+Route::get('/OnPageLoad','Common\CartController@OnPageLoad');
+
+Route::get('/checkout','Common\CheckoutController@addresses')->middleware('auth');
+Route::get('/guest-checkout','Common\CheckoutController@addresses');
+
+Route::post('/address/add','Common\CheckoutController@addAddress');
+Route::get('/select-address/{id}','Common\CheckoutController@SelectAddress');
+
+Route::post('/PaymentOptionSelection','Common\CcavenueController@payment');
 Auth::routes();
+
+
 
 //Route::get('/home', 'HomeController@index')->name('home');

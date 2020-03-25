@@ -1,77 +1,52 @@
-@extends('layouts.app')
-
-@section('content')
+@include('public.layout.header')
+<script type="text/javascript">
+     var onloadCallback = function() {
+       grecaptcha.render('captcha_element', {
+         'sitekey' : '6Lc-Z9sUAAAAAO6JxR-Nj2GuZq8ElnmG5OJKz0bn'
+       });
+     };
+   </script>
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+  <div class="row">
+    <h1 class="center">Register</h1>
+  <div class="col l6 offset-l3 center">
+    @error('captcha')
+    <span  style="color:red;text-align:center"> {{ $message }}</span>
+    @enderror
+  <form method="POST" action="{{ route('register') }}">
+      @csrf
+              <input type="text" placeholder="Name*"  name="name" required autocomplete="name" autofocus>
+              @error('name')
+              <span  style="color:red;text-align:center"> {{ $message }}</span>
+              @enderror
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
+              <input type="email" name="email" placeholder="Email*" required autocomplete="email">
+              @error('email')
+                    <span  style="color:red;text-align:center"> {{ $message }}</span>
+              @enderror
 
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+              <input type="text" name="phone" placeholder="Contact Number*" required>
+              @error('phone')
+                  <span  style="color:red;text-align:center"> {{ $message }}</span>
+              @enderror
 
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+              <input type="password" name="password" placeholder="Password*" required autocomplete="new-password">
+              @error('password')
+                    <span  style="color:red;text-align:center"> {{ $message }}</span>
+              @enderror
 
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+              <input type="password" name="password_confirmation" placeholder="Re-type Password*" required autocomplete="new-password">
+              <div id="captcha_element"></div>
+                <br/>
+              <button type="submit" class="btn btn-primary">
+                  {{ __('Register') }}
+              </button>
 
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+  </form>
+  </div>
+  </div>
 </div>
-@endsection
+@include('public.layout.footer')
+<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+        async defer>
+    </script>

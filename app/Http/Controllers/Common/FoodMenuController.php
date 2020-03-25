@@ -16,17 +16,23 @@ class FoodMenuController extends Controller
     $branches = Branch::select('city')->groupBy('city')->get();
     if (session('area')) {
         $branch = Branch::where('area',session('area'))->first();
-        $products = Product::where('branch_id',$branch->id)->get();
+        //$products = Product::where('branch_id',$branch->id)->where('is_approved',true)->get();
 
     }
     else {
-      $branch = Branch::find(238);
-      $products = Product::where('branch_id',238)->get();
+      $branch = Branch::find(18);
+    //  $products = Product::where('branch_id',18)->where('is_approved',true)->get();
     }
 
     $rootCategries = Category::get()->toTree();
 
     $branch_id = $branch->id;
-    return view('public.products',compact('products','branches','branch','rootCategries','branch_id'));
+    return view('public.products',compact('branches','branch','rootCategries','branch_id'));
+  }
+
+  public function getProdOpts($id)
+  {
+    $OptsAndAddons = array("options" => Product::find($id)->options,"addons" => Product::find($id)->addons);
+    return $OptsAndAddons;
   }
 }

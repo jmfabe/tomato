@@ -55,7 +55,18 @@
       <span id="timing">
 
   </span>
+<hr>
+<h6>Applicable Addons:</h6>
+    @foreach ($addons as $addon)
 
+            <p>
+              <label>
+                <input type="checkbox" name="addons[]" value="{{$addon->id}}"/>
+                <span>{{$addon->name}} -- AED. {{$addon->price}}</span>
+              </label>
+            </p>
+
+    @endforeach
     <button type="submit" class="btn btn-primary">
         Add
     </button>
@@ -105,8 +116,7 @@ function anytimefunc()
 $('input[type=radio][name=product_type]').change(function() {
     if (this.value == 'simple') {
       $('#pricing').html(''+
-      '<input type="text" name="regular_price" placeholder="Regular Price" required>'+
-      '<input type="text" name="offer_price" placeholder="Offer Price (ignore if no offer)">');
+      '<input type="text" name="price" placeholder="Price" required>');
     }
     else if (this.value == 'variable') {
       $('#pricing').html(''+
@@ -115,8 +125,8 @@ $('input[type=radio][name=product_type]').change(function() {
           '<input type="text" name="option_name[0]" placeholder="Option Name" value="" required>'+
         '</div>'+
         '<div class="col l8">'+
-          '<input style="width:37%;margin-right:10px" type="text" name="regular_price[0]" placeholder="Regular Price" value="" required>'+
-          '<input style="width:37%" type="text" name="offer_price[0]" placeholder="Offer Price" value="">'+
+          '<input style="width:37%;margin-right:10px" type="text" name="price[0]" placeholder="Price" value="" required>'+
+
           '<a href="#" name="addbtn[0]" onclick="event.preventDefault(); addOption(0)" style="width:10%">Add More</a>'+
         '</div>'+
 
@@ -134,8 +144,8 @@ function addOption(id){
       '<input type="text" name="option_name['+inc+']" placeholder="Option Name" value="" required>'+
     '</div>'+
     '<div class="col l8">'+
-      '<input style="width:37%;margin-right:10px" type="text" name="regular_price['+inc+']" placeholder="Regular Price" value="" required>'+
-      '<input style="width:37%" type="text" name="offer_price['+inc+']" placeholder="Offer Price" value="">'+
+      '<input style="width:37%;margin-right:10px" type="text" name="price['+inc+']" placeholder="Price" value="" required>'+
+
       '<div name="buttonsdiv['+inc+']" style="width=10%" class="right">'+
       '<a href="#" name="remove['+inc+']" onclick="event.preventDefault(); removeOption('+inc+')">Delete</a><br>'+
       '<a href="#" name="addbtn['+inc+']" onclick="event.preventDefault(); addOption('+inc+')">Add More</a>'+

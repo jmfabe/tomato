@@ -98,27 +98,9 @@
       <script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
 
 
-      <script type="text/javascript">
-      document.onmouseover = function() {
-  //User's mouse is inside the page.
-  window.innerDocClick = true;
-}
 
-document.onmouseleave = function() {
-  //User's mouse has left the page.
-  window.innerDocClick = false;
-}
 
-window.onhashchange = function() {
-  if (window.innerDocClick) {
-      //Your own in-page mechanism triggered the hash change
-  } else {
-      alert("hi");
-  }
-}
-      </script>
 
-      @include('public.script.addToCart')
  </body>
 </html>
 <script>

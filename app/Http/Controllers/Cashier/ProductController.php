@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Category;
 use App\Product;
 use App\Option;
+use App\Addon;
 use Auth;
 
 class ProductController extends Controller
@@ -42,11 +43,12 @@ class ProductController extends Controller
     {
         $cashier = Auth::user();
         $branch = $cashier->branch;
+        $addons = Addon::all();
 
         $leefCategries = Category::whereIsLeaf()->get();
 
         $PageHeading = "Add Product";
-        return view('cashier.products.add', compact('leefCategries', 'PageHeading','branch'));
+        return view('cashier.products.add', compact('leefCategries', 'PageHeading','branch','addons'));
     }
 
     public function add(Request $req)
@@ -90,8 +92,7 @@ class ProductController extends Controller
 
         if ($req->product_type == "simple") {
           $option = new Option;
-          $option->regular_price = $req->regular_price;
-          $option->offer_price = $req->offer_price;
+          $option->price = $req->price;
           $option->product_id = $product->id;
           $option->save();
         }
@@ -100,13 +101,19 @@ class ProductController extends Controller
           for ($i=0; $i < count($req->option_name); $i++) {
             $option = new Option;
             $option->name = $req->option_name[$i];
-            $option->regular_price = $req->regular_price[$i];
-            $option->offer_price = $req->offer_price[$i];
+            $option->price = $req->price[$i];
             $option->product_id = $product->id;
             $option->save();
           }
 
         }
+
+        if ($req->addons) {
+          foreach ($req->addons as $addon) {
+            $product->addons()->attach($addon);
+          }
+        }
+
 
 
         return redirect('/cashier/products')->withSuccess('Category Added Successfully');
@@ -114,12 +121,13 @@ class ProductController extends Controller
 
     public function edit($id)
     {
+        $addons = Addon::all();
         $cashier = Auth::user();
         $branch = $cashier->branch;
         $PageHeading = "Edit Product";
         $leefCategries = Category::whereIsLeaf()->get();
         $product = Product::find($id);
-        return view('cashier.products.edit', compact('product', 'PageHeading','leefCategries','branch'));
+        return view('cashier.products.edit', compact('product', 'PageHeading','leefCategries','branch','addons'));
     }
     public function update(Request $req)
     {
@@ -161,8 +169,8 @@ class ProductController extends Controller
       if ($req->product_type == "simple") {
 
         $option = new Option;
-        $option->regular_price = $req->regular_price;
-        $option->offer_price = $req->offer_price;
+        $option->price = $req->price;
+
         $option->product_id = $product->id;
         $option->save();
       }
@@ -172,13 +180,23 @@ class ProductController extends Controller
 
           $option = new Option;
           $option->name = $req->option_name[$i];
-          $option->regular_price = $req->regular_price[$i];
-          $option->offer_price = $req->offer_price[$i];
+          $option->price = $req->price[$i];
+
           $option->product_id = $product->id;
           $option->save();
         }
 
       }
+
+        if ($req->addons) {
+      $product->addons()->detach();
+
+
+      foreach ($req->addons as $addon) {
+        $product->addons()->attach($addon);
+      }
+    }
+
         return redirect('/cashier/products')->withSuccess('product updated Successfully');
     }
 }

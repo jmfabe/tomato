@@ -20,4 +20,9 @@ class Product extends Model
   {
     return $this->hasmany('App\Option');
   }
+
+  public function addons()
+  {
+    return $this->belongsToMany('App\Addon');
+  }
 }

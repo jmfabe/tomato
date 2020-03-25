@@ -25,15 +25,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
        <link rel="stylesheet" href="{{asset('frontend/css/front.css') }}">
 	   <style>
 
-     /* Hide scrollbar for Chrome, Safari and Opera */
-          ::-webkit-scrollbar {
-         display: none;
-     }
 
-     /* Hide scrollbar for IE and Edge */
-     .html {
-         -ms-overflow-style: none;
-     }
 
      .covercontainer {
      position: relative;
@@ -186,12 +178,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           <li><a href="/online-food-menu" class="puranmal-text">Order Food Online</a></li>
 
       </ul>
+      @isset($branches)
+
 
       <li><a class="modal-trigger puranmal-text" id="modalSelect" href="#modal1">@if (session()->has('city') AND session()->has('area'))
       {{Session::get('city')}}, {{Session::get('area')}}.
       @else
         Area: Al Raffa, Dubai.
-      @endif<u>Change?</u></a></li>
+      @endif<u>Change?</u></a></li>  @endisset
       <!--<sup class="dot red">20</sup>-->
      <li><a href="/cart" class="puranmal-text" style="height: 30px;"><i class="material-icons" style="font-size:20px;line-height: 30px;">shopping_cart</i><small class="notification-badge">5</small></a></li>
 
@@ -312,6 +306,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
      </form></li>-->
       </ul>
 
+      @isset($branches)
+
 
       <div id="modal1" class="modal">
        <div class="modal-content">
@@ -364,3 +360,4 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 @else
   Area: Al Raffa, Dubai.
 @endif<u>Change?</u></a>
+@endisset
