@@ -9,6 +9,7 @@ use App\Cart;
 use App\Cart_item;
 use App\Addon_cart_item;
 use App\Addon;
+use App\Branch;
 use Auth;
 
 class CartController extends Controller
@@ -115,6 +116,8 @@ $cart =  $this->UpdateSubtotal($cartitem->cart_id);
     {
         $cart = new Cart();
         $cart->identity = $identity;
+        $branch = Branch::where('area',session('area'))->first();
+        $cart->branch_id = $branch->id;
         $cart->save();
         return $cart;
     }
@@ -172,6 +175,9 @@ public function quantity($cart_item_id, $quantity)
 public function removeItem($cart_item_id)
 {
   $cart_item = Cart_item::find($cart_item_id);
+  if ($cart_item->addons()) {
+      $cart_item->addons()->detach();
+  }
   $cart = $cart_item->cart;
   $cart_item->delete();
   $cart = $this->UpdateSubtotal($cart->id);
@@ -189,7 +195,7 @@ public function CartContents($cart)
   $response = array('cart' => array('subtotal' => $cart->subtotal, 'delivery_fee' => $cart->delivery_fee, 'grand_total' => $cart->grand_total), 'cartitems' => $items);
     }
     else {
-    $response = NULL;
+    $response = 'empty';
     }
   return $response;
 }

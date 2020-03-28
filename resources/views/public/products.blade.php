@@ -292,19 +292,20 @@ $(document).on('keypress','[type="number"]',function(evt){
 function CartUpdate(data){
 
 
-  $('#mobilebar').show();
-  $('#MobileBarContent').html(data.cartitems.length+' item(s) in the cart AED '+data.cart.subtotal+' | VIEW');
+
   $('.cart').html('<table class="carttable"><tbody>');
   if(data.cartitems)
   {
+    $('#mobilebar').show();
+    $('#MobileBarContent').html(data.cartitems.length+' item(s) in the cart AED '+data.cart.subtotal+' | VIEW');
   for (var i = 0; i < data.cartitems.length; i++) {
     $('.carttable').append('<tr>'+
-    '<td id="'+i+'">'+data.cartitems[i].name+'<a onclick="removeCart('+data.cartitems[i].id+');" href="#"><i class="material-icons">close</i></a><br> AED. '+data.cartitems[i].unitprice+'<br></td>'+
+    '<td class="'+i+'">'+data.cartitems[i].name+'<a onclick="removeCart('+data.cartitems[i].id+');" href="#"><i class="material-icons">close</i></a><br> AED. '+data.cartitems[i].unitprice+'<br></td>'+
     '<td><input style="width:40px; text-align:center" id="'+data.cartitems[i].id+'" type=number value="'+data.cartitems[i].quantity+'"></td>'+
       '<td class="right">'+data.cartitems[i].totalprice+'</td>'+
     '</tr>');
     for (var j = 0; j < data.cartitems[i].addons.length; j++) {
-      $('.carttable #'+i+'').append(data.cartitems[i].addons[j].name);
+      $('.carttable .'+i+'').append(data.cartitems[i].addons[j].name);
     }
   }
 

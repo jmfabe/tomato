@@ -18,6 +18,10 @@ class CreateOrdersTable extends Migration
 
             $table->bigInteger('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
+            $table->bigInteger('branch_id')->unsigned();
+            $table->foreign('branch_id')->references('id')->on('branches');
+
             $table->string('guest_id')->nullable();
 
             $table->decimal('sub_total', 20, 2);

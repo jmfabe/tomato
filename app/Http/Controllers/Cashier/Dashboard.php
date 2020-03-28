@@ -17,7 +17,8 @@ class Dashboard extends Controller
   public function Dashboard()
   {
         $cashier = Auth::user();
-      $branch = $cashier->branch;
-    return view('cashier.dashboard',compact('branch'));
+        $branch = $cashier->branch;
+        $orders = $branch->orders;
+    return view('cashier.dashboard',compact('branch','orders'));
   }
 }

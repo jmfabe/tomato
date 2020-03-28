@@ -1,14 +1,38 @@
 @include('cashier.layout.header')
-      <main>
-      <div class="container">
-        <h1>This is the Cashier dashboard</h1>
-      </div>
-      </main>
-      <!--JavaScript at end of body for optimized loading-->
-      <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
-    <script src="{{ asset('/js/front.js') }}"></script>
-    </body>
-  </html>
+
+    <h2>New Order Updates</h2>
+
+
+
+    <table>
+      <thead>
+        <tr>
+          <th>Order #</th>
+          <th>Name</th>
+          <th>Grand Total</th>
+          <th>Payment Method</th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach ($orders as $order)
+          @if ($order->statuses->sortBy('created_at')->last()->order_status === 1)
+        <tr>
+          <td>{{$order->id}}</td>
+          <td>{{$order->fullname}}</td>
+          <td>{{$order->grand_total}}</td>
+          <td>{{$order->payment_method}}</td>
+        </tr>
+        @endif
+          @endforeach
+      </tbody>
+    </table>
+
+
+
 @include('cashier.layout.footer')
+<script type="text/javascript">
+   setTimeout(function(){
+       location.reload();
+   },30000);
+</script>

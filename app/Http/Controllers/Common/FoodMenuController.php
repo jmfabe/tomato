@@ -15,15 +15,15 @@ class FoodMenuController extends Controller
 
     $branches = Branch::select('city')->groupBy('city')->get();
     if (session('area')) {
-        $branch = Branch::where('area',session('area'))->first();
+
         //$products = Product::where('branch_id',$branch->id)->where('is_approved',true)->get();
 
     }
     else {
-      $branch = Branch::find(18);
+      session(['area' => 'Al Raffa']);
     //  $products = Product::where('branch_id',18)->where('is_approved',true)->get();
     }
-
+    $branch = Branch::where('area',session('area'))->first();
     $rootCategries = Category::get()->toTree();
 
     $branch_id = $branch->id;

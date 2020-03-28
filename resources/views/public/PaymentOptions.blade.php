@@ -7,17 +7,17 @@
   @csrf
   <p>
     <label>
-      <input name="paymentOption" value="COD" type="radio" checked/>
+      <input name="paymentOption" value="CCAVENUE" type="radio" checked/>
       <span>Pay through Cards</span>
     </label>
   </p>
     <p>
       <label>
-        <input name="paymentOption" value="CCAVENUE" type="radio" />
+        <input name="paymentOption" value="COD" type="radio" />
         <span>Cash On Delivery</span>
       </label>
     </p>
-    <button type="submit" class="btn" name="button">Pay and Order</button>
+    <button type="submit" class="btn" name="button">Confirm Order</button>
     <br>
     <br>
   </form>

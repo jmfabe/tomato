@@ -7,7 +7,14 @@ use Illuminate\Http\Request;
 
 use Auth;
 use App\Cart;
+use App\Cart_item;
+use App\Order;
+use App\Order_item;
+use App\Order_status;
 
+use Mail;
+
+use App\Mail\OrderSuccessMail;
 
 class CcavenueController extends Controller
 {
@@ -16,28 +23,46 @@ class CcavenueController extends Controller
         if ($req->paymentOption == "COD") {
             $order_id = $this->CartToOrderPush("COD");
         // pass the order to order success view file update order database
+        if ($order_id=="FAILED") {
+            echo "Some error occured, please contact Adminitrator";
+        }
+        else {
+          $order = Order::find($order_id);
+          if (Auth::check()) {
+              $user = Auth::user();
+              $email = $user->email;
+          } else {
+
+              $email = $order->email;
+          }
+
+                Mail::to($email)->cc(\config('puranmal.ADMIN_EMAIL'))->cc("catering@puranmal.ae")->send(new OrderSuccessMail($order));
+                $url = url('/')."/food-order-success";
+                //$data = array('key1' => 'value1', 'key2' => 'value2');?>
+          <form method="post" id="codform" action="<?php echo $url ?>">
+          <?php
+          echo "<input type='hidden' name='orderid' value='$order->id>'"; ?>
+          </form>
+          <script language='javascript'>document.getElementById('codform').submit();</script>
+          <?php
+
+
+            //ccavenue prepaid payment
+        }
         } else {
             $order_id = $this->CartToOrderPush("CCAVENUE");
             if ($order_id=="FAILED") {
                 echo "Some error occured, please contact Adminitrator";
-            } else {
-                if ($req->paymentOption == 'COD') {
-                    Mail::to($billing_email)->cc(\config('puranmal.ADMIN_EMAIL'))->cc("catering@puranmal.ae")->send(new OrderSuccessMail($order));
-                    $url = url('/')."/order-success";
-                    //$data = array('key1' => 'value1', 'key2' => 'value2');?>
-              <form method="post" id="codform" action="<?php echo $url ?>">
-              <?php
-              echo "<input type='hidden' name='orderid' value='$order->id>'"; ?>
-              </form>
-              <script language='javascript'>document.getElementById('codform').submit();</script>
-              <?php
-                } else {
+            }
+            else {
+
                     $this->paymentControl($order_id);
-                }
 
                 //ccavenue prepaid payment
             }
         }
+
+
         // retry word is not found push to order table and initiate payment
     }
 
@@ -57,6 +82,7 @@ class CcavenueController extends Controller
         $order = new Order;
 
         $order->sub_total = $cart->subtotal;
+        $order->branch_id = $cart->branch_id;
         $order->grand_total = $cart->grand_total;
         $order->delivery_fee = $cart->delivery_fee;
         $order->payment_method = $PayMethod;
@@ -87,10 +113,10 @@ class CcavenueController extends Controller
         $status = new Order_status;
         if ($PayMethod == "COD") {
             $status->order_status = 1;
-            $order->status()->save($status);
+            $order->statuses()->save($status);
         } else {
             $status->order_status = 0;
-            $order->status()->save($status);
+            $order->statuses()->save($status);
         }
 
 
@@ -206,7 +232,7 @@ echo "<input type=hidden name=encRequest value=$encrypted_data>";
             //$order->order_status = "Placed";
             $status = new Order_status;
             $status->order_status = 1;
-            $order->status()->save($status);
+            $order->statuses()->save($status);
 
             Mail::to($billing_email)->cc(\config('puranmal.ADMIN_EMAIL'))->cc("catering@puranmal.ae")->send(new OrderSuccessMail($order));
 
@@ -232,7 +258,7 @@ echo "<input type=hidden name=encRequest value=$encrypted_data>";
             //$order->order_status = "Payment Failed";
             $status = new Order_status;
             $status->order_status = 7;
-            $order->status()->save($status);
+            $order->statuses()->save($status);
             //send an email to customer and admin
 
             return view('public.OrderCancelled', compact('order'));
@@ -246,7 +272,7 @@ echo "<input type=hidden name=encRequest value=$encrypted_data>";
             //$order->order_status = "Payment Failed";
             $status = new Order_status;
             $status->order_status = 7;
-            $order->status()->save($status);
+            $order->statuses()->save($status);
 
             //send an email to customer and admin
 
@@ -260,7 +286,7 @@ echo "<input type=hidden name=encRequest value=$encrypted_data>";
             //$order->order_status = "Payment Failed";
             $status = new Order_status;
             $status->order_status = 7;
-            $order->status()->save($status);
+            $order->statuses()->save($status);
 
             //send an email to customer and admin
 

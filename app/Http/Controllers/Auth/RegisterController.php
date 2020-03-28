@@ -8,7 +8,8 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Http\Request;
+use App\Cart;
 class RegisterController extends Controller
 {
     /*
@@ -29,7 +30,18 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+     protected function redirectTo()
+     {
+       if (session('targeturl')) {
+         return session('targeturl');
+       }
+       else {
+         return '/';
+       }
+
+
+
+     }
 
     /**
      * Create a new controller instance.
@@ -53,6 +65,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'phone' => ['required', 'string', 'min:5', 'max:200'],
         ]);
     }
 
@@ -68,6 +81,20 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'phone' => $data['phone'],
         ]);
+    }
+    protected function registered(Request $request,$user)
+    {
+      if ($request->session()->has('identity')) {
+      $cart = Cart::where('identity',$request->session()->get('identity'))->first();
+      if ($cart) {
+        $cart->identity = $user->id;
+        $cart->save();
+      }
+
+    }
+
+
     }
 }

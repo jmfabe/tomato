@@ -10,4 +10,9 @@ class Cart extends Model
   {
     return $this->hasmany('App\Cart_item');
   }
+
+  public function address()
+  {
+    return $this->belongsto('App\Address');
+  }
 }

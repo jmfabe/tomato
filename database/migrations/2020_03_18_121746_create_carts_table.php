@@ -17,6 +17,8 @@ class CreateCartsTable extends Migration
             $table->id();
             $table->string('identity');
             $table->integer('address_id')->nullable();
+            $table->bigInteger('branch_id')->unsigned();
+            $table->foreign('branch_id')->references('id')->on('branches');
             $table->string('note')->nullable();
             $table->decimal('subtotal', 8, 2)->nullable();
             $table->decimal('delivery_fee', 20, 2)->nullable();

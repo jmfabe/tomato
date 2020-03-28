@@ -187,7 +187,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         Area: Al Raffa, Dubai.
       @endif<u>Change?</u></a></li>  @endisset
       <!--<sup class="dot red">20</sup>-->
-     <li><a href="/cart" class="puranmal-text" style="height: 30px;"><i class="material-icons" style="font-size:20px;line-height: 30px;">shopping_cart</i><small class="notification-badge">5</small></a></li>
+    <!-- <li><a href="/cart" class="puranmal-text" style="height: 30px;"><i class="material-icons" style="font-size:20px;line-height: 30px;">shopping_cart</i><small class="notification-badge">5</small></a></li>-->
 
 
 

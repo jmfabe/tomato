@@ -11,5 +11,8 @@ class Branch extends Model
       return $this->hasmany('App\Branch_hour');
     }
 
-    
+    public function orders()
+    {
+      return $this->hasmany('App\Order');
+    }
 }
